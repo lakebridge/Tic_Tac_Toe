@@ -40,9 +40,9 @@ function createGame(name1, name2) {
     }
 
     function print() {
-        console.log(gameBoard.board[0, 1, 2]);
-        console.log(gameBoard.board[3, 4, 5]);
-        console.log(gameBoard.board[6, 7, 8])
+        console.log(gameBoard.board.slice(0, 3));
+        console.log(gameBoard.board.slice(3, 6));
+        console.log(gameBoard.board.slice(6, 9));
     }
 
         
@@ -54,13 +54,15 @@ function createGame(name1, name2) {
         gameBoard.board[index] = currentPlayer.symbol;
 
         if (checkWin(gameBoard.board, currentPlayer.symbol)) {
-            return console.log("Congratulations, you win");
+            console.log("Congratulations, you win");
             over = true;
+            return;
         }
 
         if (checkTie(gameBoard.board)) {
-            return console.log("the game is finished - Tie");
+            console.log("the game is finished - Tie");
             over = true;
+            return;
         }
 
         currentPlayer = currentPlayer === player1 ? player2 : player1;
@@ -69,7 +71,7 @@ function createGame(name1, name2) {
     return {
         playMove,
         print,
-        getCurrentPlay: () => currentPlayer,
+        getCurrentPlayer: () => currentPlayer,
         getBoard: () => gameBoard.board
     };
 }

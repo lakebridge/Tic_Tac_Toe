@@ -54,7 +54,7 @@ function createGame(name1, name2) {
         gameBoard.board[index] = currentPlayer.symbol;
 
         if (checkWin(gameBoard.board, currentPlayer.symbol)) {
-            console.log("Congratulations, you win");
+            console.log(`Congratulations, ${currentPlayer.name} wins`);
             over = true;
             return;
         }
@@ -77,3 +77,6 @@ function createGame(name1, name2) {
 }
 
 
+function displayGame(game) {
+    
+}

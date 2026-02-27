@@ -18,6 +18,8 @@ function createGame(name1, name2) {
 
     let currentPlayer = player1;
 
+    const display = displayGame();
+
     function checkWin(board, symbol) {
     const wins = [
         [0, 1, 2],
@@ -48,13 +50,14 @@ function createGame(name1, name2) {
         
     function playMove(index) {
 
-        if (over) return console.log("the game is over");
-        if (gameBoard.board[index] !== "") return console.log("this cell is already taken");
+        if (over) return alert("the game is over");
+        if (gameBoard.board[index] !== "") return alert("this cell is already taken");
 
         gameBoard.board[index] = currentPlayer.symbol;
+        display(index, currentPlayer.symbol);
 
         if (checkWin(gameBoard.board, currentPlayer.symbol)) {
-            console.log(`Congratulations, ${currentPlayer.name} wins`);
+           alert(`Congratulations, ${currentPlayer.name} wins`);
             over = true;
             return;
         }
@@ -77,6 +80,56 @@ function createGame(name1, name2) {
 }
 
 
-function displayGame(game) {
+function displayGame() {
+
+    const board = document.createElement("div");
+    const h1 = document.querySelector("h1");
+
+    board.classList.add("board");
+    h1.after(board);
+
+    // col = i%3;
+    // row = Math.floor (index /3);
+
+    for (let r=0; r<3; r++) {
+        for (let c=0; c<3; c++) {
+
+            const cell = document.createElement("div");
+            cell.classList.add("cell");
+            
+            const id = r*3 + c;
+            cell.dataset.index = id;
+            board.appendChild(cell);
+        }
+    }
+
+
+
+    function display(index, symbol) {
+
+        const cell = document.querySelector(`[data-index="${index}"]`);
+
+        cell.textContent = symbol;
+    }
+
+    return display;
+
     
 }
+
+(function launch() {
+    const player1 = prompt("Play1 name?") || "Player 1";
+    const player2 = prompt("Play2 name?") || "Player 2";
+
+    const game = createGame(player1, player2);
+    const board = document.querySelector(".board");
+
+    board.addEventListener("click", (e) => {
+
+            const cell = e.target.closest(".cell");
+            const index = cell.dataset.index;
+
+            game.playMove(index);
+
+    })
+})()
